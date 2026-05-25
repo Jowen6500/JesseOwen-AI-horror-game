@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class TestScoreManager : MonoBehaviour
 {
-    [SerializeField] private TestInputManager _inputManager;
+    //[SerializeField] private TestInputManager _inputManager;
     private int _score;
     public int Score{ get => _score; }
 

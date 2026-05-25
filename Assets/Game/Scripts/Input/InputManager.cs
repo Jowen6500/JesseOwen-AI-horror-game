@@ -9,6 +9,8 @@ using static GameInputAction;
 public class InputManager : MonoBehaviour, IPlayerActions
 {
     private GameInputAction _inputAction;//referencing "GameInputAction"
+    public UnityEvent<Vector2> OnMoveInput;
+    public UnityEvent<bool> OnSprintInput;
 
     private void Awake()//runs before Start and before any GameObject is active
     {
@@ -29,6 +31,19 @@ public class InputManager : MonoBehaviour, IPlayerActions
 
     public void OnMove(InputAction.CallbackContext context)//when "Move" input is triggered
     {
-        Debug.Log(context.ReadValue<Vector2>());//display Vector2 value based on input
+        //Debug.Log(context.ReadValue<Vector2>());//display Vector2 value based on input
+        OnMoveInput?.Invoke(context.ReadValue<Vector2>());
+    }
+
+    public void OnSprint(InputAction.CallbackContext context)//when "Sprint" input is triggered
+    {
+        if (context.performed)//pressed
+        {
+            OnSprintInput?.Invoke(true);
+        }
+        if (context.canceled)//released
+        {
+            OnSprintInput?.Invoke(false);
+        }
     }
 }
