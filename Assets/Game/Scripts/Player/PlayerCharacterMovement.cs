@@ -9,7 +9,7 @@ public class PlayerCharacterMovement : MonoBehaviour
     [SerializeField] private float _gravityScale = 1;//initialize gravity scale value
     private float _velocityY;
     private bool _isGrounded;
-    private bool _isSprinting;
+    private bool _isSprinting; public bool IsSprinting => _isSprinting;
     [SerializeField] private float _walkSpeed = 1;
     [SerializeField] private float _sprintSpeed = 2;
     [SerializeField] private float _acceleration = 0.5f;
@@ -63,9 +63,9 @@ public class PlayerCharacterMovement : MonoBehaviour
     {
         if (_movementDirection.magnitude >= 0.01)//if magnitude of movedir > 0
         { 
-            if (_isSprinting)//if sprinting accelerate speed
+            if (_isSprinting)//if sprinting
             { 
-                _currentSpeed += _acceleration * Time.deltaTime; 
+                _currentSpeed += _acceleration * Time.deltaTime;//increase current speed overtime
             } 
             else _currentSpeed -= _acceleration * Time.deltaTime;//else sprinting decelerate speed
             
@@ -73,8 +73,9 @@ public class PlayerCharacterMovement : MonoBehaviour
         }
         else
         {
-            _currentSpeed -= _acceleration * Time.deltaTime; //else set move speed to zero
-            _currentSpeed = Mathf.Clamp(_currentSpeed, 0, _sprintSpeed);//to cap current speed value
+            _currentSpeed = 0;//set current speed to 0
+            //_currentSpeed -= _acceleration * Time.deltaTime; //decrease current speed overtime
+            //_currentSpeed = Mathf.Clamp(_currentSpeed, 0, _sprintSpeed);//to cap current speed value
         }
     }
     
