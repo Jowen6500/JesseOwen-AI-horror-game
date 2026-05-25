@@ -9,14 +9,13 @@ public class MyScript : MonoBehaviour
     
     //Initialization Lifecycle (Magic Methods)
     private void Awake(){}//Called when the script instance is loaded (runs before Start and before any GameObject is active)
-
-    private void Start()
+    private void Start()//Called on the frame the script is enabled, just before any of the update methods are called for the first time
     {
         for (int i = 0; i < 5; i++)
         {
             Debug.Log(i);
         }
-    }//Called on the frame the script is enabled, just before any of the update methods are called for the first time
+    }
     private void Reset(){}//Called when the script is attached to an object for the first time or when the Reset command is used in the Inspector, setting default values
     
     //Frame-based Updates
@@ -29,15 +28,14 @@ public class MyScript : MonoBehaviour
     private void OnDisable(){}//Called when the behavior becomes disabled or inactive. Ideal for unsubscribing from events
     private void OnDestroy(){}//Called when the object/script is being destroyed (runs at the very end of the frame or when scene loading ends)
 
-    
+    /*Naming Identifier for different access modifier
     private int _myInt;
     public int MyInt;
-    protected int _myInt2;
-    private void Method()
-    {
-        int myInt;
-    }
+    protected int _myInt;
+    private/public/protected void Method(){}//same for everything on methods
+    */
 
+    //
     static void Main(string[] args)
     {
         for (int i = 0; i < 5; i++)

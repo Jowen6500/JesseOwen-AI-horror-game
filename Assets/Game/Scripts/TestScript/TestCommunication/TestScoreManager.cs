@@ -1,11 +1,9 @@
-using System;
 using UnityEngine;
 
-public class ScoreManager : MonoBehaviour
+public class TestScoreManager : MonoBehaviour
 {
-    [SerializeField] private InputManager _inputManager;
+    [SerializeField] private TestInputManager _inputManager;
     private int _score;
-    
     public int Score{ get => _score; }
 
     /*//disable if using inspector to invoke event
