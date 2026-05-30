@@ -8,8 +8,8 @@ using static GameInputAction;
 public class InputManager : MonoBehaviour, IPlayerActions
 {
     private GameInputAction _inputAction;//declare _inputAction as GameInputAction
-    public UnityEvent<Vector2> OnMoveInput;//declare OnMoveInput as UnityEvent with Vector2 data type
-    public UnityEvent<bool> OnSprintInput;//declare OnSprintInput as UnityEvent with bool data type
+    public UnityEvent<Vector2> OnMoveInput;//declare OnMoveInput as UnityEvent returning Vector2 data type
+    public UnityEvent<bool> OnSprintInput;//declare OnSprintInput as UnityEvent returning bool data type
 
     private void Awake()//runs before Start and before any GameObject is active
     {
