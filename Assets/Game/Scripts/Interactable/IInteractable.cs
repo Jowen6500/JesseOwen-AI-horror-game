@@ -4,5 +4,5 @@ using UnityEngine;
 public interface IInteractable
 {
     public string Name { get; }//creating its properties
-    public void Interact();//creating its method
+    public void Interact(PlayerCharacter character);//creating its method with argument "PlayerCharacter"
 }

@@ -387,8 +387,10 @@ GameObject:
   m_Component:
   - component: {fileID: 131273813}
   - component: {fileID: 131273815}
+  - component: {fileID: 131273818}
   - component: {fileID: 131273814}
   - component: {fileID: 131273816}
+  - component: {fileID: 131273817}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -471,6 +473,33 @@ MonoBehaviour:
   _sprintStaminaCost: 20
   _staminaRegenValue: 20
   _characterMovement: {fileID: 131273814}
+--- !u!114 &131273817
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 131273812}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 77dcc5135672ad24b83c2eee6240e498, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &131273818
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 131273812}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e36e076b0c3897f409b1e2ab200836f2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _movement: {fileID: 131273814}
+  _stamina: {fileID: 131273816}
+  _inventory: {fileID: 131273817}
 --- !u!1001 &157855508
 PrefabInstance:
   m_ObjectHideFlags: 0

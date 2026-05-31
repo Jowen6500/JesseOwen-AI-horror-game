@@ -34,7 +34,7 @@ public class Door : MonoBehaviour, IInteractable
     
     //created context menu so the interact function can be called through the door component inside the inspector
     [ContextMenu("Interact Door")]
-    public void Interact()//abstract function interact
+    public void Interact(PlayerCharacter character)//abstract function interact
     {
         if (_isOpen == true)//if door state is open
         {
