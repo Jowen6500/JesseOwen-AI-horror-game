@@ -10,6 +10,8 @@ public class InputManager : MonoBehaviour, IPlayerActions
     private GameInputAction _inputAction;//declare _inputAction as GameInputAction
     public UnityEvent<Vector2> OnMoveInput;//declare OnMoveInput as UnityEvent returning Vector2 data type
     public UnityEvent<bool> OnSprintInput;//declare OnSprintInput as UnityEvent returning bool data type
+    // Membuat event OnInteractInput
+    public UnityEvent OnInteractInput;
 
     private void Awake()//runs before Start and before any GameObject is active
     {
@@ -18,14 +20,6 @@ public class InputManager : MonoBehaviour, IPlayerActions
         _inputAction.Player.Enable();//activating action map "Player"
         _inputAction.Player.SetCallbacks(this);//telling that "InputManager" class will detect an input from action map "Player"
         
-    }
-
-    public void OnInteract(InputAction.CallbackContext context)//when "Interact" input is triggered
-    {
-        if (context.performed)//".performed" -> a bool var to detect whether the context is performed or not
-        {
-            Debug.Log("Interacting");
-        }
     }
 
     public void OnMove(InputAction.CallbackContext context)//when "Move" input is triggered
@@ -43,6 +37,14 @@ public class InputManager : MonoBehaviour, IPlayerActions
         if (context.canceled)//released
         {
             OnSprintInput?.Invoke(false);//invoke and send bool data to listener
+        }
+    }
+
+    public void OnInteract(InputAction.CallbackContext context)//when "Interact" input is triggered
+    {
+        if (context.performed)//if interact button is pressed
+        {
+            OnInteractInput?.Invoke();//invoke OnInteractInput and tell listener to execute the code
         }
     }
 }

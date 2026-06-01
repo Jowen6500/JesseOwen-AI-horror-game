@@ -7,7 +7,7 @@ public class PlayerCharacterMovement : MonoBehaviour
     private Vector3 _velocityXZ;//velocity of x and z axis
     [SerializeField] private CharacterController _characterController;//initialize character controller
     [SerializeField] private float _gravityScale = 1;//initialize gravity scale value
-    private float _velocityY;//velocity of y axis
+    private float _velocityY;//velocity of y-axis
     private bool _isGrounded;//grounded state using bool
     private bool _isSprinting; public bool IsSprinting => _isSprinting;//sprint state using bool and add properties
     [SerializeField] private float _walkSpeed = 1;//the walk speed value cap

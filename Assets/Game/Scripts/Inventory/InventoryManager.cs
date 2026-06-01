@@ -17,7 +17,7 @@ public class InventoryManager : MonoBehaviour
         // yang id nya sama dengan id yang ditentukan di parameter.
         // Jika ketemu akan bernilai true, jika tidak akan bernilai false.
         bool isExsists = Items.Exists(itemData => string.Equals(itemData.ID, id));
-        return isExsists;//return the "isExsists" data
+        return isExsists;//return the "isExists" data
     }
  
     public void RemoveItem(ItemData item)//method to delete/remove items from "_item" list
