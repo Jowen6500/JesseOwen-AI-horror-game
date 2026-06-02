@@ -14,7 +14,7 @@ public class InteractDetector : MonoBehaviour
     
     private void Interact()//method to execute interaction
     {
-        if (_detectedInteractable != null)//if _detectedInteractable is not null(has value)
+        if (_detectedInteractable != null && _isDetectingInteractable)//if _detectedInteractable is not null(has value) and ray is detecting interactable object
         {
             _isInteracting = true;//set interacting state to true on this frame
             _detectedInteractable.Interact(_playerCharacter);//call interact function and send _playerCharacter var as its argument
@@ -49,6 +49,7 @@ public class InteractDetector : MonoBehaviour
             {
                 _detectedInteractable = interactable;//insert object into _detectedInteractable var
             }
+            //_detectedInteractable = _hitInfo.collider.gameObject.GetComponent<IInteractable>();
             return;
         }
         _detectedInteractable = null;//set _detectedInteractable to null if no interactable object is detected

@@ -36,13 +36,23 @@ public class Door : MonoBehaviour, IInteractable
     [ContextMenu("Interact Door")]
     public void Interact(PlayerCharacter character)//abstract function interact
     {
-        if (_isOpen == true)//if door state is open
+        if (_isLocked) //if door is locked
+        {
+            bool hasKey = character.Inventory.CheckItem(_keyID);//bool var to ref if player has the key then true
+            if (hasKey)//if character has the key
+            {
+                _isLocked = false;//set door's locked state to false(unlocked)
+                Open();//call open the door method
+                //play sound
+            }
+            Debug.Log(_isLocked ? "Locked" : "Unlocked");
+            return;
+        }
+        //if door is not locked, execute code below
+        if (_isOpen)//if door state is opened when interacting, close the door
         {
             Close();
         }
-        else//if door state is close
-        {
-            Open();//open the door
-        }
+        else Open();//if door state is closed when interacting, open the door
     }
 }
