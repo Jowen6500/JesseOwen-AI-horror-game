@@ -6,22 +6,29 @@ public class InteractDetector : MonoBehaviour
     [SerializeField] private float _detectorDistance;//float var to set boxcast distance
     [SerializeField] private Vector3 _detectorBoxSize = Vector3.one;//Vector3 var to set the boxcast size(scaling xyz)
     [SerializeField] private LayerMask _interactableLayer;//LayerMask var to ref the interactable layer
-    private bool _isDetectingInteractable;//bool var to set is detecting interactable state
-    private RaycastHit _hitInfo;//var to get hitted object info
  
     private IInteractable _detectedInteractable;//var to ref detected object
     private bool _isInteracting;//bool var for interacting state
+    private bool _isDetectingInteractable;//bool var to set is detecting interactable state
+    private RaycastHit _hitInfo;//var to get hitted object info
+
+    public bool Enabled { get; private set; } = true;//create property to determine interaction active state with "true" as starting value
+    private void SetEnabled(bool isEnabled)//method to change movement active status
+    {
+        Enabled = isEnabled;
+    }
+    public void CallSetEnabled(bool isEnabled) { SetEnabled(isEnabled); }
     
     private void Interact()//method to execute interaction
     {
-        if (_detectedInteractable != null && _isDetectingInteractable)//if _detectedInteractable is not null(has value) and ray is detecting interactable object
+        if (_detectedInteractable != null && _isDetectingInteractable && Enabled)//if _detectedInteractable is not null(has value) and ray is detecting interactable object
         {
             _isInteracting = true;//set interacting state to true on this frame
             _detectedInteractable.Interact(_playerCharacter);//call interact function and send _playerCharacter var as its argument
             _detectedInteractable = null;//set _detectedInteractable to null(detected object = null)
         }
     }
-    public void CallInteract(){Interact();}
+    public void CallInteract() { Interact(); }//called through inspector
     
     private void UpdateDetection()//method to update the raycast detection for interaction
     {
@@ -30,29 +37,35 @@ public class InteractDetector : MonoBehaviour
             _isInteracting = false;//set interacting state to false
             return;//Keluar dari function untuk frame saat ini, kemudian kembali di frame berikut nya
         }
-        Transform cameraTransform = Camera.main.transform;//get ref of the main camera's transform component
-        
-        //set a boolean to detect interactable object
-        _isDetectingInteractable = Physics.BoxCast(
-            cameraTransform.position, 
-            _detectorBoxSize * 0.5f, 
-            cameraTransform.forward, 
-            out _hitInfo, 
-            Quaternion.identity, 
-            _detectorDistance, 
-            _interactableLayer);
 
-        if (_isDetectingInteractable)//if interactable layer is hit
+        if (Enabled)
         {
-            IInteractable interactable = _hitInfo.collider.gameObject.GetComponent<IInteractable>();//Mengecek apakah object punya component class yang implementasi interface interactable
-            if (interactable != null)//if interactable is not null(has value)
+            Transform cameraTransform = Camera.main.transform;//get ref of the main camera's transform component
+        
+            //set a boolean to detect interactable object
+            _isDetectingInteractable = Physics.BoxCast(
+                cameraTransform.position, 
+                _detectorBoxSize * 0.5f, 
+                cameraTransform.forward, 
+                out _hitInfo, 
+                Quaternion.identity, 
+                _detectorDistance, 
+                _interactableLayer);
+
+            if (_isDetectingInteractable)//if interactable layer is hit
             {
-                _detectedInteractable = interactable;//insert object into _detectedInteractable var
+                /*
+                IInteractable interactable = _hitInfo.collider.gameObject.GetComponent<IInteractable>();//Mengecek apakah object punya component class yang implementasi interface interactable
+                if (interactable != null)//if interactable is not null(has value)
+                {
+                    _detectedInteractable = interactable;//insert object into _detectedInteractable var
+                }
+                */
+                _detectedInteractable = _hitInfo.collider.gameObject.GetComponent<IInteractable>();
+                return;
             }
-            //_detectedInteractable = _hitInfo.collider.gameObject.GetComponent<IInteractable>();
-            return;
+            _detectedInteractable = null;//set _detectedInteractable to null if no interactable object is detected
         }
-        _detectedInteractable = null;//set _detectedInteractable to null if no interactable object is detected
     }
     
     private void OnDrawGizmosSelected()//built-in method to draw gizmos(only visible when the object using this script is selected)
