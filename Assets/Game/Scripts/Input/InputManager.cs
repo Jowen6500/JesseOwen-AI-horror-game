@@ -8,10 +8,10 @@ using static GameInputAction;
 public class InputManager : MonoBehaviour, IPlayerActions
 {
     private GameInputAction _inputAction;//declare _inputAction as GameInputAction
-    public UnityEvent<Vector2> OnMoveInput;//declare OnMoveInput as UnityEvent returning Vector2 data type
-    public UnityEvent<bool> OnSprintInput;//declare OnSprintInput as UnityEvent returning bool data type
-    // Membuat event OnInteractInput
-    public UnityEvent OnInteractInput;
+    public UnityEvent<Vector2> OnMoveInput;//declare OnMoveInput as UnityEvent(to create input event)
+    public UnityEvent<bool> OnSprintInput;//declare OnSprintInput as UnityEvent(to create input event)
+    public UnityEvent OnInteractInput;//declare OnInteractInput as UnityEvent(to create input event)
+    public UnityEvent OnFlashlightInput;//declare OnInteractInput as UnityEvent(to create input event)
 
     private void Awake()//runs before Start and before any GameObject is active
     {
@@ -45,6 +45,14 @@ public class InputManager : MonoBehaviour, IPlayerActions
         if (context.performed)//if interact button is pressed
         {
             OnInteractInput?.Invoke();//invoke OnInteractInput and tell listener to execute the code
+        }
+    }
+
+    public void OnFlashlight(InputAction.CallbackContext context)
+    {
+        if (context.performed)
+        {
+            OnFlashlightInput?.Invoke();//invoke OnFlashlightInput and tell listener to execute the code
         }
     }
 }

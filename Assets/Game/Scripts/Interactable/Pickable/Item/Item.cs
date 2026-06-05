@@ -8,7 +8,7 @@ public class Item : MonoBehaviour, IInteractable, IPickable
     public string Name => _itemData.Name;//get "_itemData.Name" value and assign it into the "Name" property inside the IInteractable
     public UnityEvent OnItemPicked;//unity event var, used to tell other module/class that there's an item being picked up
 
-    public void Pickup(PlayerCharacter character)//Pickup Method
+    public virtual void Pickup(PlayerCharacter character)//Pickup Method virtual so child can override it
     {
         ItemData newData = new ItemData(_itemData.ID, _itemData.Name);//create a copy of "_itemData"
         // Menambahkan salinan data ke list di inventory
@@ -22,6 +22,6 @@ public class Item : MonoBehaviour, IInteractable, IPickable
     [ContextMenu("Interact Item")]
     public void Interact(PlayerCharacter character)//Interact method
     {
-        Pickup(character);
+        Pickup(character);//call pickup method
     }
 }

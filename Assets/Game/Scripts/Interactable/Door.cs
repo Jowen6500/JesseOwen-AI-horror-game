@@ -12,6 +12,7 @@ public class Door : MonoBehaviour, IInteractable
     [SerializeField] protected bool _isLocked;//bool var we'll use for door's lock state
     [SerializeField] protected string _keyID;//string var to store the door's key id
     
+    
     protected bool _isAnimating;//bool var we'll use for door's animating state(is playing anim or not)
     public bool IsAnimating => _isAnimating;//get "_isAnimating" state and assign it into the "IsAnimating" property inside the ...
     
@@ -43,6 +44,7 @@ public class Door : MonoBehaviour, IInteractable
             {
                 _isLocked = false;//set door's locked state to false(unlocked)
                 Open();//call open the door method
+                
                 //play sound
             }
             Debug.Log(_isLocked ? "Locked" : "Unlocked");

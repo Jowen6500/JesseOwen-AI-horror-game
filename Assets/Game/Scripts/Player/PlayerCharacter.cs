@@ -8,12 +8,14 @@ public class PlayerCharacter : MonoBehaviour
     [SerializeField] private InteractDetector _interactDetector;//var to ref "InteractDetector" script/module/class
     [SerializeField] private CameraManager _cameraManager;//var to ref "CameraManager" script/module/class
     [SerializeField] private InputManager _inputManager;//var to ref "InputManager" script/module/class
+    [SerializeField] private Flashlight _flashlight;
     public PlayerCharacterMovement Movement => _movement;//to get "_movement" value/data
     public PlayerCharacterStamina Stamina => _stamina;//to get "_stamina" value/data
     public InventoryManager Inventory => _inventoryManager;//to get "_inventoryManager" value/data
     public InteractDetector InteractDetector => _interactDetector;//to get "_interactDetector" value/data
     public CameraManager Camera => _cameraManager;//to get "_cameraManager" value/data
     public InputManager Input => _inputManager;//to get "_inputManager" value/data
+    public Flashlight Flashlight => _flashlight;
     
     public bool IsHiding { get; private set; }//create property to determine player's hiding status
     private void SetIsHiding(bool isHiding)//method to change player's hiding status
