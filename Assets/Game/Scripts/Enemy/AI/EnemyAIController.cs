@@ -1,5 +1,6 @@
 using System.Collections;
 using Unity.Behavior;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.Events;
@@ -41,5 +42,31 @@ public class EnemyAIController : MonoBehaviour
         OnDespawn?.Invoke();
         yield return new WaitForEndOfFrame();
         gameObject.SetActive(false);
+    }
+
+    /*
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.CompareTag("Player"))
+        {
+            PlayerCharacter character = collision.gameObject.GetComponent<PlayerCharacter>();
+            if (character != null)
+            {
+                character.CallDeath();
+            }
+        }
+    }
+    */
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.CompareTag("Player"))
+        {
+            PlayerCharacter character = other.gameObject.GetComponent<PlayerCharacter>();
+            if (character != null && !character.IsDead)
+            {
+                character.CallDeath();
+                character.IsDead = true;
+            }
+        }
     }
 }

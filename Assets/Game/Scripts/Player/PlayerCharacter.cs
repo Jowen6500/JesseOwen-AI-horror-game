@@ -23,6 +23,14 @@ public class PlayerCharacter : MonoBehaviour
         IsHiding = isHiding;
     }
     public void CallSetIsHiding(bool isHiding){ SetIsHiding(isHiding); }//called on HidingCloset module/class
+
+    public bool IsDead { get; set; }//15.06.26
+    
+    private void Death()
+    {
+        Debug.Log("Death");
+    }
+    public void CallDeath(){ Death(); }
     
     private void Awake()
     {
