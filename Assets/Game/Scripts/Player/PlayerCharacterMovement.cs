@@ -65,6 +65,13 @@ public class PlayerCharacterMovement : MonoBehaviour
     private void SetSprinting(bool isSprinting)//set invoked sprinting bool value to _isSprinting var in this class
     {
         _isSprinting = isSprinting;
+
+        if (isSprinting)//if is sprinting
+        {
+            HUDManager.Instance.StaminaUI.StaminaBG.CrossFadeAlpha(1, 0.5f, false);//invoke crossfade StaminaBG Alpha to 1
+            HUDManager.Instance.StaminaUI.StaminaFill.CrossFadeAlpha(1, 0.5f, false);//invoke crossfade StaminaFill Alpha to 1
+            //HUDManager.Instance.StaminaUI.CallSetVisible(true);//activate stamina bar
+        }
     }
     public void CallSetSprinting(bool isSprinting){ SetSprinting(isSprinting); }//<<called through inspector
 
