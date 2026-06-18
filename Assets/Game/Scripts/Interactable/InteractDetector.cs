@@ -27,6 +27,7 @@ public class InteractDetector : MonoBehaviour
             _detectedInteractable.Interact(_playerCharacter);//call interact function and send _playerCharacter var as its argument
             _detectedInteractable = null;//set _detectedInteractable to null(detected object = null)
             HUDManager.Instance.InteractionUI.CallSetVisible(false);
+            HUDManager.Instance.CrosshairUI.CallSetHighlight(true);
         }
     }
     public void CallInteract() { Interact(); }//called through inspector
@@ -61,11 +62,13 @@ public class InteractDetector : MonoBehaviour
                     _detectedInteractable = interactable;//insert object into _detectedInteractable var
                     HUDManager.Instance.InteractionUI.CallSetObjectName(_detectedInteractable.Name);
                     HUDManager.Instance.InteractionUI.CallSetVisible(true);
+                    HUDManager.Instance.CrosshairUI.CallSetHighlight(true);
                 }
                 return;
             }
             _detectedInteractable = null;//set _detectedInteractable to null if no interactable object is detected
             HUDManager.Instance.InteractionUI.CallSetVisible(false);
+            HUDManager.Instance.CrosshairUI.CallSetHighlight(false);
         }
     }
     
