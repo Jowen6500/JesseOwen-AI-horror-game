@@ -15,7 +15,10 @@ public class PlayerCharacterStamina : MonoBehaviour
     private void Awake()
     {
         _currentStamina = _maxStamina;//set current stamina to max
-        
+    }
+
+    private void Start()
+    {
         HUDManager.Instance.StaminaUI.CallSetStaminaFill(_currentStamina, _maxStamina);//initialize set stamina fill function from StaminUI
     }
 

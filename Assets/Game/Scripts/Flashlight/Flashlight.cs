@@ -9,8 +9,8 @@ public class Flashlight : MonoBehaviour
     [SerializeField] private float _initialBatteryLevel = 100;//var to set battery initial max charge
     [SerializeField] private float _batteryDrainRate = 1;//var to set battery drain rate
     private float _currentBatteryLevel;//var to ref current battery level
-    private Coroutine _afterFlashlightOffWaitCoroutine;
-    private bool _isWaitingBatteryOff;
+    private Coroutine _fadeOffBatteryCoroutine;
+    private bool _isFadeOffBatteryRunning;
     [SerializeField] private float _disableBatteryBarAfter = 1;
     
     public bool HasFlashlight => _playerCharacter.Inventory.CheckItem("flashlight_01");//property to get check flashlight from inventory
@@ -19,34 +19,38 @@ public class Flashlight : MonoBehaviour
     private void Awake()
     {
         _currentBatteryLevel = _initialBatteryLevel;//initialize current battery
+    }
+
+    private void Start()
+    {
         HUDManager.Instance.BatteryUI.CallUpdateBatteryFill(_currentBatteryLevel, _initialBatteryLevel);
     }
 
     private void UseFlashlight()//method to turn on/off flashlight
     {
-        if (HasFlashlight && _light != null)//if has flashlight and light component not null
+        if (HasFlashlight && _light != null)//if (has flashlight) & (has light component)
         {
-            if (HasBattery)//if has battery
+            if (HasBattery)//if (has flashlight) & (has battery)
             {
                 _light.enabled = !_light.enabled;//change flashlight state on/off
 
-                if (_light.enabled)//if (has flashlight) and (light component has value) and (has battery) and (lights on)
+                if (_light.enabled)//if (has flashlight) and (has battery) and (lights on)
                 {
-                    if (_afterFlashlightOffWaitCoroutine != null)//if (sprinting) and (stopRegenStaminaCoroutine has value)
+                    if (_fadeOffBatteryCoroutine != null)//if (has flashlight) and (has battery) and (lights on) and (coroutine has value)
                     {
-                        StopCoroutine(_afterFlashlightOffWaitCoroutine);//stop coroutine of stopRegenStaminaCoroutine
-                        _afterFlashlightOffWaitCoroutine = null;//set stopRegenStaminaCoroutine null
+                        StopCoroutine(_fadeOffBatteryCoroutine);//stop coroutine
+                        _fadeOffBatteryCoroutine = null;//set coroutine null
                     }
-                    _isWaitingBatteryOff = false;
+                    _isFadeOffBatteryRunning = false;
                     HUDManager.Instance.BatteryUI.BatteryBG.CrossFadeAlpha(1, 0.5f, false);//invoke crossfade StaminaBG Alpha to 1
                     HUDManager.Instance.BatteryUI.BatteryFill.CrossFadeAlpha(1, 0.5f, false);//invoke crossfade StaminaFill Alpha to 1
                 }
-                else//if (has flashlight) and (light component has value) and (has battery) and (lights off)
+                else//if (has flashlight) and (has battery) and (lights off)
                 {
-                    if (!_isWaitingBatteryOff)
+                    if (!_isFadeOffBatteryRunning)
                     {
-                        _afterFlashlightOffWaitCoroutine = StartCoroutine(AfterFlashlightOffWait());//start coroutine of stopRegenStaminaCoroutine
-                        _isWaitingBatteryOff = true;
+                        _fadeOffBatteryCoroutine = StartCoroutine(FadeOffBatteryBar());//start coroutine
+                        _isFadeOffBatteryRunning = true;
                     }
                 }
                 
@@ -67,13 +71,13 @@ public class Flashlight : MonoBehaviour
 
     private void UpdateBatteryLevel()//method to update current battery level
     {
-        if (_light != null && _light.enabled)//if light is not null and flashlighe is on
+        if (_light != null && _light.enabled)//if (has light component) & (lights on)
         {
-            if (HasBattery)//if has battery
+            if (HasBattery)//if (lights on) & (has battery)
             {
                 _currentBatteryLevel -= Time.deltaTime * _batteryDrainRate;//drain current battery
             }
-            else
+            else//if (lights on) & (has no battery)
             {
                 _currentBatteryLevel = 0;//set current battery level to 0
                 _light.enabled = false;//set flashlight off
@@ -104,7 +108,7 @@ public class Flashlight : MonoBehaviour
         UpdateBatteryLevel();//call method
     }
     
-    private IEnumerator AfterFlashlightOffWait()
+    private IEnumerator FadeOffBatteryBar()
     {
         yield return new WaitForSeconds(_disableBatteryBarAfter);//wait for x seconds
         HUDManager.Instance.BatteryUI.BatteryBG.CrossFadeAlpha(0, 1, false);//invoke crossfade BatteryBG Alpha to 0
