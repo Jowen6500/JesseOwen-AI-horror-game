@@ -36,21 +36,21 @@ public class Flashlight : MonoBehaviour
 
                 if (_light.enabled)//if (has flashlight) and (has battery) and (lights on)
                 {
+                    _isFadeOffBatteryRunning = false;
                     if (_fadeOffBatteryCoroutine != null)//if (has flashlight) and (has battery) and (lights on) and (coroutine has value)
                     {
                         StopCoroutine(_fadeOffBatteryCoroutine);//stop coroutine
                         _fadeOffBatteryCoroutine = null;//set coroutine null
                     }
-                    _isFadeOffBatteryRunning = false;
                     HUDManager.Instance.BatteryUI.BatteryBG.CrossFadeAlpha(1, 0.5f, false);//invoke crossfade StaminaBG Alpha to 1
                     HUDManager.Instance.BatteryUI.BatteryFill.CrossFadeAlpha(1, 0.5f, false);//invoke crossfade StaminaFill Alpha to 1
                 }
                 else//if (has flashlight) and (has battery) and (lights off)
                 {
-                    if (!_isFadeOffBatteryRunning)
+                    _isFadeOffBatteryRunning = true;
+                    if (_isFadeOffBatteryRunning)
                     {
                         _fadeOffBatteryCoroutine = StartCoroutine(FadeOffBatteryBar());//start coroutine
-                        _isFadeOffBatteryRunning = true;
                     }
                 }
                 
@@ -113,5 +113,10 @@ public class Flashlight : MonoBehaviour
         yield return new WaitForSeconds(_disableBatteryBarAfter);//wait for x seconds
         HUDManager.Instance.BatteryUI.BatteryBG.CrossFadeAlpha(0, 1, false);//invoke crossfade BatteryBG Alpha to 0
         HUDManager.Instance.BatteryUI.BatteryFill.CrossFadeAlpha(0, 1, false);//invoke crossfade BatteryFill Alpha to 0
+        _isFadeOffBatteryRunning = false;
+    }
+    public void CallFadeOffBattery()
+    {
+        _fadeOffBatteryCoroutine = StartCoroutine(FadeOffBatteryBar());//start coroutine
     }
 }
