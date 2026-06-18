@@ -26,6 +26,7 @@ public class InteractDetector : MonoBehaviour
             _isInteracting = true;//set interacting state to true on this frame
             _detectedInteractable.Interact(_playerCharacter);//call interact function and send _playerCharacter var as its argument
             _detectedInteractable = null;//set _detectedInteractable to null(detected object = null)
+            HUDManager.Instance.InteractionUI.CallSetVisible(false);
         }
     }
     public void CallInteract() { Interact(); }//called through inspector
@@ -54,17 +55,17 @@ public class InteractDetector : MonoBehaviour
 
             if (_isDetectingInteractable)//if interactable layer is hit
             {
-                /*
                 IInteractable interactable = _hitInfo.collider.gameObject.GetComponent<IInteractable>();//Mengecek apakah object punya component class yang implementasi interface interactable
                 if (interactable != null)//if interactable is not null(has value)
                 {
                     _detectedInteractable = interactable;//insert object into _detectedInteractable var
+                    HUDManager.Instance.InteractionUI.CallSetObjectName(_detectedInteractable.Name);
+                    HUDManager.Instance.InteractionUI.CallSetVisible(true);
                 }
-                */
-                _detectedInteractable = _hitInfo.collider.gameObject.GetComponent<IInteractable>();
                 return;
             }
             _detectedInteractable = null;//set _detectedInteractable to null if no interactable object is detected
+            HUDManager.Instance.InteractionUI.CallSetVisible(false);
         }
     }
     
