@@ -65,7 +65,6 @@ public class EnemyAIController : MonoBehaviour
             if (character != null && !character.IsDead)
             {
                 character.CallDeath();
-                character.IsDead = true;
             }
         }
     }

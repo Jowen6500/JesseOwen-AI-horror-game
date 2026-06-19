@@ -15,6 +15,7 @@ public class PlayerCharacterMovement : MonoBehaviour
     [SerializeField] private float _acceleration = 0.5f;//acceleration value to gain or lose speed overtime
 
     public bool Enabled { get; private set; } = true;//property used to determine movement enable or disable state
+    
     private void SetEnabled(bool isEnabled)//method to change movement active status
     {
         Enabled = isEnabled;
