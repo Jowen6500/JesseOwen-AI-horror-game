@@ -19,6 +19,7 @@ public class Door : MonoBehaviour, IInteractable
     protected bool _isOpen;//bool var to determine the door's open/close state
     public UnityEvent OnDoorOpen;//declare OnDoorOpen as UnityEvent to invoke an event
     public UnityEvent OnDoorClose;//declare OnDoorClose as UnityEvent to invoke an event
+    public UnityEvent OnDoorLocked;
     protected Coroutine _animatingDoorCoroutine;//var to store coroutine that's being executed
     
     public virtual void Open()//opening door method, virtual so the child that inherits this method can modify it
@@ -46,6 +47,10 @@ public class Door : MonoBehaviour, IInteractable
                 Open();//call open the door method
                 
                 //play sound
+            }
+            else//if character has no key
+            {
+                OnDoorLocked?.Invoke();
             }
             Debug.Log(_isLocked ? "Locked" : "Unlocked");
             return;
