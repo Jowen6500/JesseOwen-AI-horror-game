@@ -11,6 +11,7 @@ public class PlayerCharacterStamina : MonoBehaviour
     private Coroutine _stopRegenStaminaCoroutine;
     private bool _isWaitingStaminaRegen;
     [SerializeField] private float _disableStaminaBarAfter = 1;
+    [SerializeField] private AudioSource _breathingAudio;
     
     private void Awake()
     {
@@ -55,6 +56,7 @@ public class PlayerCharacterStamina : MonoBehaviour
         _currentStamina = Mathf.Clamp(_currentStamina, 0, _maxStamina);//set current stamina cap
         
         HUDManager.Instance.StaminaUI.CallSetStaminaFill(_currentStamina, _maxStamina);//call set stamina fill function from StaminUI
+        _breathingAudio.volume = 1 -  (_currentStamina / _maxStamina);
     }
 
     private void Update()
