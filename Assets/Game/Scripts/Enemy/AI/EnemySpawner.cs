@@ -27,7 +27,7 @@ public class EnemySpawner : MonoBehaviour
         
         yield return new WaitForSeconds(spawnDelay);
 
-        if (_enemyAIController.PlayerCharacter == null && _enemyAIController.PlayerCharacter.IsHiding)
+        if (_enemyAIController.PlayerCharacter == null && _enemyAIController.PlayerCharacter.IsHiding)// << diubah jadi or
         {
             RestartSpawn();
             yield break;
@@ -41,6 +41,7 @@ public class EnemySpawner : MonoBehaviour
         float spawnDistance = Random.Range(_minSpawnDistance, _maxSpawnDistance);
         Vector3 spawnPosition = _enemyAIController.PlayerCharacter.transform.position - _enemyAIController.PlayerCharacter.transform.forward * spawnDistance;
         spawnPosition.y = _enemyAIController.transform.position.y;
+        //spawnPosition.y = _enemyAIController.PlayerCharacter.transform.position.y; << perbaikan materi video
         
         _enemyAIController.NavMeshAgent.enabled = true;
         _enemyAIController.NavMeshAgent.Warp(spawnPosition);

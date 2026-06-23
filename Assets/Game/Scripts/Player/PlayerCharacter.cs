@@ -51,8 +51,8 @@ public class PlayerCharacter : MonoBehaviour
         _cameraManager.CallSetCameraInputEnable(false);//set camera input false
         _movement.CallSetEnabled(false);//set movement input false
         CursorManager.Instance.CallShowCursor();//Show cursor
-        OnDeath?.Invoke();
         Debug.Log("Death");
+        OnDeath?.Invoke();
     }
     public void CallDeath(){ Death(); }
 }
