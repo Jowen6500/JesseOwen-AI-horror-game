@@ -48,9 +48,9 @@ public class PlayerCharacter : MonoBehaviour
     private void Death()
     {
         IsDead = true;
-        _cameraManager.CallSetCameraInputEnable(false);//set camera input false
-        _movement.CallSetEnabled(false);//set movement input false
-        CursorManager.Instance.CallShowCursor();//Show cursor
+        //_cameraManager.CallSetCameraInputEnable(false);//set camera input false
+        //_movement.CallSetEnabled(false);//set movement input false
+        //CursorManager.Instance.CallShowCursor();//Show cursor
         Debug.Log("Death");
         OnDeath?.Invoke();
     }
