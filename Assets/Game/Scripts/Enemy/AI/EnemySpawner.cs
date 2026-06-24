@@ -38,8 +38,11 @@ public class EnemySpawner : MonoBehaviour
 
     private void SpawnEnemy()
     {
+        Transform cameraTransform = Camera.main.transform;
         float spawnDistance = Random.Range(_minSpawnDistance, _maxSpawnDistance);
-        Vector3 spawnPosition = _enemyAIController.PlayerCharacter.transform.position - _enemyAIController.PlayerCharacter.transform.forward * spawnDistance;
+        //Vector3 spawnPosition = _enemyAIController.PlayerCharacter.transform.position - _enemyAIController.PlayerCharacter.transform.forward * spawnDistance;
+        
+        Vector3 spawnPosition = cameraTransform.position - cameraTransform.forward * spawnDistance;
         
         //spawnPosition.y = _enemyAIController.transform.position.y;
         //perbaikan materi video
