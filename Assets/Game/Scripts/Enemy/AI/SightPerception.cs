@@ -16,7 +16,7 @@ public class SightPerception : MonoBehaviour
         CanSeePlayer = CheckSight();//set can see player state into CheckSight value
     }
     
-    public bool CheckSight()//returns target on ai fov range? state
+    private bool CheckSight()//returns target on ai fov range? state
     {
         if (_target == null)//if no target
         {

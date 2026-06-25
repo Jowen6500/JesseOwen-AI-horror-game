@@ -18,7 +18,7 @@ public class EnemyAIController : MonoBehaviour
     public NavMeshAgent NavMeshAgent => _navMeshAgent;
     public PlayerCharacter PlayerCharacter => _playerCharacter;
     public SightPerception SightPerception => _sightPerception;
-
+    
     private void Despawn()
     {
         StartCoroutine(DespawnAfterEndOfFrame());

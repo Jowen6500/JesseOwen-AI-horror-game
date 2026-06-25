@@ -40,8 +40,9 @@ public class SceneLoader : MonoBehaviour
         if (_blackBGObject != null && _blackBGImage != null && _blackBGObject.activeSelf)
         {
             Debug.Log("Fading Out...");
+            yield return new WaitForSeconds(0.5f);
             _blackBGImage.CrossFadeAlpha(0, _fadeDuration, false);
-            yield return new WaitForSeconds(_fadeDuration + 0.5f);
+            yield return new WaitForSeconds(_fadeDuration + 0.1f);
             
             _blackBGObject.SetActive(false);
         }
