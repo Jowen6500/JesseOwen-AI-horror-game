@@ -2,18 +2,26 @@ using UnityEngine;
 
 public class PlayerCharacterMovement : MonoBehaviour
 {
-    private Vector3 _movementDirection;//var to initialize movedir
-    [SerializeField] private float _currentSpeed = 1;//var to initialize current character speed
+    private Vector3 _movementDirection;//var to ref movedir
+    [SerializeField] private float _currentSpeed = 1;//var to ref current character speed
     private Vector3 _velocityXZ;//velocity of x and z axis
-    [SerializeField] private CharacterController _characterController;//initialize character controller
-    [SerializeField] private float _gravityScale = 1;//initialize gravity scale value
-    private float _velocityY;//velocity of y axis
+    [SerializeField] private CharacterController _characterController;//ref CharacterController module
+    [SerializeField] private float _gravityScale = 1;//ref gravity scale value
+    private float _velocityY;//velocity of y-axis
     private bool _isGrounded;//grounded state using bool
     private bool _isSprinting; public bool IsSprinting => _isSprinting;//sprint state using bool and add properties
     [SerializeField] private float _walkSpeed = 1;//the walk speed value cap
     [SerializeField] private float _sprintSpeed = 2;//the sprint speed value cap
     [SerializeField] private float _acceleration = 0.5f;//acceleration value to gain or lose speed overtime
 
+    public bool Enabled { get; private set; } = true;//property used to determine movement enable or disable state
+    
+    private void SetEnabled(bool isEnabled)//method to change movement active status
+    {
+        Enabled = isEnabled;
+    }
+    public void CallSetEnabled(bool isEnabled) { SetEnabled(isEnabled); }
+    
     private void SetMoveDirection(Vector2 inputDirection)//method to set move direction
     {
         _movementDirection = new Vector3(inputDirection.x, 0, inputDirection.y);
@@ -58,6 +66,13 @@ public class PlayerCharacterMovement : MonoBehaviour
     private void SetSprinting(bool isSprinting)//set invoked sprinting bool value to _isSprinting var in this class
     {
         _isSprinting = isSprinting;
+
+        if (isSprinting)//if is sprinting
+        {
+            HUDManager.Instance.StaminaUI.StaminaBG.CrossFadeAlpha(1, 0.5f, false);//invoke crossfade StaminaBG Alpha to 1
+            HUDManager.Instance.StaminaUI.StaminaFill.CrossFadeAlpha(1, 0.5f, false);//invoke crossfade StaminaFill Alpha to 1
+            //HUDManager.Instance.StaminaUI.CallSetVisible(true);//activate stamina bar
+        }
     }
     public void CallSetSprinting(bool isSprinting){ SetSprinting(isSprinting); }//<<called through inspector
 
@@ -83,10 +98,20 @@ public class PlayerCharacterMovement : MonoBehaviour
     
     private void Move()//method to move character player
     {
-        CalculateVelocityXZ();//calculate velocity of x & z
-        CalculateVelocityY();//calculate velocity of y
-        Vector3 velocity = new Vector3(_velocityXZ.x, _velocityY, _velocityXZ.z);//combined direction velocity off all xyz
-        _characterController.Move(velocity);//move the character using character controller
+        if (Enabled)
+        {
+            CalculateVelocityXZ();//calculate velocity of x & z
+            CalculateVelocityY();//calculate velocity of y
+            Vector3 velocity = new Vector3(_velocityXZ.x, _velocityY, _velocityXZ.z);//combined direction velocity off all xyz
+            _characterController.Move(velocity);//move the character using character controller
+        }
+    }
+
+    private void OnDrawGizmosSelected()
+    {
+        if(_isGrounded) Gizmos.color = Color.cyan;
+        else Gizmos.color = Color.red;
+        Gizmos.DrawSphere(transform.position, 0.5f);
     }
     
     private void Update()
